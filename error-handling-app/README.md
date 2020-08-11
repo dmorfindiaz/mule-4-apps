@@ -10,9 +10,7 @@ This application shows all the different kind of error handlings that exist in M
 
 • try-catch
 
-• global exception strategy: 
+• global exception strategy: There are 2 xml's, 
 
-	There are 2 xml's, 
-	
-		• global-error-handler-global-sample: It contains the global configurations and the global error handler
-		• global-error-handler-implementation-sample: It generates the error that is thrown to the global error handler
+	• global-error-handler-global-sample: It contains the global configurations and the global error handler
+	• global-error-handler-implementation-sample: It generates the error that is thrown to the global error handler
