@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:validation="http://www.mulesoft.org/schema/mule/validation" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mule/validation/current/mule-validation.xsd">
+	<flow name="tryCatchFlow" doc:id="48da8f8d-e56d-434a-90c7-20a3a647603c" >
+		<http:listener doc:name="Listener" doc:id="200609aa-c506-4b2b-85a9-6bdb9452bf75" config-ref="HTTP_Listener_config" path="/tryCatch"/>
+		<set-payload value="#[payload]" doc:name='Set "Started flow"' doc:id="79bbdb5c-2f43-4e7b-b917-1de5354d8ced" />
+		<try doc:name="Try" doc:id="47723516-b3fd-431b-a082-3b6b346d291b" >
+			<validation:is-number numberType="INTEGER" doc:name="Is number" doc:id="3823c5aa-fc8a-4ad7-8a81-4525999787d1" value="#[payload]"/>
+			<set-payload value='#["finished try scope"]' doc:name='Set "finished try scope"' doc:id="7dece1fd-c23f-4594-901d-f8b8220df29a" />
+			<error-handler >
+				<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="381c1bb4-ae77-4da0-b6bd-fde8945e32e7" >
+					<set-payload value='#["Error Try Scope"]' doc:name='Set "Error Try Scope"' doc:id="b86eeda2-9073-45b2-88dd-a3496a360e69" />
+				</on-error-continue>
+			</error-handler>
+		</try>
+		<set-payload value='#["Finished flow"]' doc:name='Set "Finished flow"' doc:id="fbf1784a-d2bf-4a2b-85ec-6424238cbc83" />
+	</flow>
+</mule>

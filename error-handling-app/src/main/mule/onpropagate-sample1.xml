@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:validation="http://www.mulesoft.org/schema/mule/validation" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mule/validation/current/mule-validation.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="c1e39cac-fd85-41e7-890d-6cd792ae6261" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="onpropagate-sample1Flow" doc:id="dc891547-577f-4735-a9e5-3cdb40f3c41f" >
+		<http:listener doc:name="Listener" doc:id="75b3b538-241e-43c3-9cbd-99d6f6d8828c" config-ref="HTTP_Listener_config" path="/onPropagate1"/>
+		<set-payload value='#["test"]' doc:name='Set "test" as payload' doc:id="513ee1ae-b00f-4223-aa55-30fe9b1ea8ca" />
+		<validation:is-number numberType="INTEGER" doc:name="Is number" doc:id="9c07f1ec-ca11-4a08-87c7-755744d3c586" value="#[payload]"/>
+		<set-payload value='#["Finished Flow"]' doc:name="Set finished flow" doc:id="dd198243-2072-47d9-ada6-abf2447dd927" />
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="6f5eafcf-340d-46f7-87d0-2283e8b96213" >
+				<set-payload value='#["Error Main flow"]' doc:name='Set "Error Main flow"' doc:id="f66800e3-a7b1-4567-8dcd-9581de55319c" />
+			</on-error-propagate>
+		</error-handler>
+	</flow>
+</mule>

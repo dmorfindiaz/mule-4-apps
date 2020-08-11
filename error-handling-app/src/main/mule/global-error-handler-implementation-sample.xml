@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:validation="http://www.mulesoft.org/schema/mule/validation" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mule/validation/current/mule-validation.xsd">
+	<flow name="defaultErrorHandler-sample1Flow" doc:id="0a9d0b9a-9e2e-44da-aa44-376e5d0c5999" >
+		<http:listener doc:name="Listener" doc:id="70ee3e54-8548-4b34-bdf6-e164db3c9407" config-ref="HTTP_Listener_config" path="/defaultErrorHandler"/>
+		<set-payload value='#["started flow"]' doc:name='Set "started flow"' doc:id="53ba1bbf-7226-499a-96c2-f6d5b8712cfe" />
+		<validation:is-number numberType="INTEGER" doc:name="Is number" doc:id="f996b3ba-d106-4d51-8e5f-a3301e72f2ee" value="#[payload]"/>
+		<set-payload value='#["finished flow"]' doc:name='Set "finished flow"' doc:id="ad5884da-b1f5-4272-87ea-c70b98815e7f" />
+	</flow>
+</mule>
