@@ -36,11 +36,11 @@ The correct endpoints for each method will be provided in the Postman Collection
 
 To be able to work with API manager, (tool that gives us the functionality of our client Id enforcement policy), we need to make sure that the bellow properties are added to our project
 
-anypoint.platform.client_id=b5aad327b27541558c4769acbb226c0a
+• anypoint.platform.client_id=b5aad327b27541558c4769acbb226c0a
 
-anypoint.platform.client_secret=B6C484D61d0642a4804B55C02Ee107Db
+• anypoint.platform.client_secret=B6C484D61d0642a4804B55C02Ee107Db
 
-api.id=16286403
+• api.id=16286403
 
 Notes:
 api.id (for autodiscovery)
