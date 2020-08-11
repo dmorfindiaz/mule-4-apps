@@ -1,0 +1,38 @@
+#%RAML 1.0
+title: exercise
+
+traits:
+  client-id-required:
+    headers:
+      client_id:
+        type: string
+      client_secret:
+        type: string
+    responses:
+      401:
+        description: Unauthorized or invalid client application credentials
+      500:
+        description: Bad response from authorization server, or WSDL SOAP Fault error
+
+/accounts:
+  description: accounts objects from SF
+  get:
+    is: [client-id-required]
+    description: Get list of accounts
+  post:
+    is: [client-id-required]
+    description: Insert multiple accounts
+
+  /{accountId}:
+    get:
+      is: [client-id-required]
+      description: Get single account
+    put:
+      is: [client-id-required]
+      description: Update single account
+    delete:
+      is: [client-id-required]
+      description: Delete single account
+      
+
+    

@@ -1,0 +1,441 @@
+{
+	"info": {
+		"_postman_id": "23d9f7d1-92ba-4d41-9c01-713322566ea5",
+		"name": "isc2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Local",
+			"item": [
+				{
+					"name": "get All Accounts",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "client_id",
+								"value": "12",
+								"type": "text"
+							},
+							{
+								"key": "client_secret",
+								"value": "12",
+								"type": "text"
+							},
+							{
+								"key": "id",
+								"value": "0013t00001YWD6fAAH",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8081/api/accounts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get Single Account",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "client_id",
+								"value": "12",
+								"type": "text"
+							},
+							{
+								"key": "client_secret",
+								"value": "12",
+								"type": "text"
+							},
+							{
+								"key": "accountId",
+								"value": "0013t00001YWD6fAAH",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8081/api/accounts/a003t00000kjvHOAAY",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"accounts",
+								"a003t00000kjvHOAAY"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "post single Account",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "client_id",
+								"value": "123",
+								"type": "text"
+							},
+							{
+								"key": "client_secret",
+								"value": "123",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "  {\r\n    \"Industry\": \"Energy\",\r\n    \"Type\": \"Customer - Direct\",\r\n    \"Phone\": \"(650) 450-8810\",\r\n    \"AccountNumber\": \"CD355120-B\",\r\n    \"Name\": \"United Oil & Gas, Singapore\"\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/accounts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete single Account",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "client_id",
+								"value": "123",
+								"type": "text"
+							},
+							{
+								"key": "client_secret",
+								"value": "123",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/accounts/a003t00000kjvAsAAI3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"accounts",
+								"a003t00000kjvAsAAI3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "put single Account",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "client_id",
+								"value": "123",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "client_secret",
+								"value": "123",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Industry\": \"Biotechnology\",\r\n    \"Type\": \"Customer - Channel\",\r\n    \"Phone\": \"(111) 111-1111\",\r\n    \"type\": \"Account\",\r\n    \"Name\": \"test-insert-update1\",\r\n    \"AccountNumber\": \"000000004\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/accounts/a003t00000kjvHOAAY",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"accounts",
+								"a003t00000kjvHOAAY"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "CloudHub",
+			"item": [
+				{
+					"name": "get All Accounts",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "client_id",
+								"value": "c6b20f34a76e400c96bfdfefde3a3319",
+								"type": "text"
+							},
+							{
+								"key": "client_secret",
+								"value": "D491f3F368A74592A15a29bEBa8500E5",
+								"type": "text"
+							},
+							{
+								"key": "id",
+								"value": "0013t00001YWD6fAAH",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://exercise-sf-app.us-e2.cloudhub.io/api/accounts",
+							"protocol": "http",
+							"host": [
+								"exercise-sf-app",
+								"us-e2",
+								"cloudhub",
+								"io"
+							],
+							"path": [
+								"api",
+								"accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get Single Account",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "client_id",
+								"value": "c6b20f34a76e400c96bfdfefde3a3319",
+								"type": "text"
+							},
+							{
+								"key": "client_secret",
+								"value": "D491f3F368A74592A15a29bEBa8500E5",
+								"type": "text"
+							},
+							{
+								"key": "accountId",
+								"value": "0013t00001YWD6fAAH",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://exercise-sf-app.us-e2.cloudhub.io/api/accounts/a003t00000kjvHOAAY",
+							"protocol": "http",
+							"host": [
+								"exercise-sf-app",
+								"us-e2",
+								"cloudhub",
+								"io"
+							],
+							"path": [
+								"api",
+								"accounts",
+								"a003t00000kjvHOAAY"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete Single Account",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "client_id",
+								"value": "c6b20f34a76e400c96bfdfefde3a3319",
+								"type": "text"
+							},
+							{
+								"key": "client_secret",
+								"value": "D491f3F368A74592A15a29bEBa8500E5",
+								"type": "text"
+							},
+							{
+								"key": "accountId",
+								"value": "0013t00001YWD6fAAH",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://exercise-sf-app.us-e2.cloudhub.io/api/accounts/a003t00000kjvHOAAY",
+							"protocol": "http",
+							"host": [
+								"exercise-sf-app",
+								"us-e2",
+								"cloudhub",
+								"io"
+							],
+							"path": [
+								"api",
+								"accounts",
+								"a003t00000kjvHOAAY"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "put Single Account",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "client_id",
+								"value": "c6b20f34a76e400c96bfdfefde3a3319",
+								"type": "text"
+							},
+							{
+								"key": "client_secret",
+								"value": "D491f3F368A74592A15a29bEBa8500E5",
+								"type": "text"
+							},
+							{
+								"key": "accountId",
+								"value": "0013t00001YWD6fAAH",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Industry\": \"Biotechnology\",\r\n    \"Type\": \"Customer - Channel\",\r\n    \"Phone\": \"(111) 111-1111\",\r\n    \"type\": \"Account\",\r\n    \"Name\": \"test-insert-update1\",\r\n    \"AccountNumber\": \"000000004\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://exercise-sf-app.us-e2.cloudhub.io/api/accounts/a003t00000kjvHOAAY",
+							"protocol": "http",
+							"host": [
+								"exercise-sf-app",
+								"us-e2",
+								"cloudhub",
+								"io"
+							],
+							"path": [
+								"api",
+								"accounts",
+								"a003t00000kjvHOAAY"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "post Single Account",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "client_id",
+								"value": "c6b20f34a76e400c96bfdfefde3a3319",
+								"type": "text"
+							},
+							{
+								"key": "client_secret",
+								"value": "D491f3F368A74592A15a29bEBa8500E5",
+								"type": "text"
+							},
+							{
+								"key": "accountId",
+								"value": "0013t00001YWD6fAAH",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "  {\r\n    \"Industry\": \"Apparel\",\r\n    \"Type\": \"Customer - Direct\",\r\n    \"Phone\": \"(336) 222-7000\",\r\n    \"Name\": \"Burlington Textiles Corp of America\",\r\n    \"AccountNumber\": \"CD656092\"\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://exercise-sf-app.us-e2.cloudhub.io/api/accounts/a003t00000kjvHOAAY",
+							"protocol": "http",
+							"host": [
+								"exercise-sf-app",
+								"us-e2",
+								"cloudhub",
+								"io"
+							],
+							"path": [
+								"api",
+								"accounts",
+								"a003t00000kjvHOAAY"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

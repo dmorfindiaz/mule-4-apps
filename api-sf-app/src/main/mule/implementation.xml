@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
+	<sub-flow name="postAccountSubFlow" doc:id="78624efe-d93f-42ca-84df-c141196df7c8" >
+		<ee:transform doc:name="Transform Message" doc:id="077ef79b-a193-423f-a449-5e21f2a3ce5b">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/java
+---
+[{
+	"Industry__c": payload.Industry,
+	"Type__c": payload.Type,
+	"Phone__c": payload.Phone,
+	"Name__c": payload.Name,
+	"Account_Number__c": payload.AccountNumber
+}]]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<salesforce:create type="New_Account__c" doc:name="Create" doc:id="3094331f-8754-4fce-9e33-6c8d6d5c23b6" config-ref="Salesforce_Config" />
+		<ee:transform doc:name="Transform Message" doc:id="5ef77451-0908-4f1d-ad35-dbaabf211e60">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+skipNullOn="everywhere"
+---
+{
+	id: payload.items[0].id,
+	status: payload.items[0].successful,
+	message: payload.items[0].message
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</sub-flow>
+	<sub-flow name="getSingleAccountSubFlow" doc:id="3cfb16fc-23d5-420f-84e1-7f0c34af1df6" >
+		<set-variable value="single_account" doc:name="Set method type" doc:id="4c13433a-8abb-4474-9c4b-b73841ccc988" variableName="methodType" />
+		<salesforce:query doc:name="Query" doc:id="f037f0fa-b5a2-4765-8c2b-f3ff9ef6d3e6" config-ref="Salesforce_Config">
+			<salesforce:salesforce-query><![CDATA[SELECT Id, Name__c, Account_Number__c, Industry__c, Type__c, Phone__c
+FROM New_Account__c
+WHERE Id = ':idrequest']]></salesforce:salesforce-query>
+			<salesforce:parameters><![CDATA[#[output application/java
+---
+{
+	idrequest : attributes.uriParams.accountId
+}]]]></salesforce:parameters>
+		</salesforce:query>
+		<flow-ref doc:name="checkEmpties flow" doc:id="c6e41473-6ffb-48c7-9e0f-f75878be2b58" name="checkEmpties" />
+	</sub-flow>
+	<sub-flow name="getMultipleAccountsSubFlow" doc:id="6bed7815-4a74-43a7-8c49-b3ca142997be" >
+		<set-variable value="multiple_accounts" doc:name="Set method type" doc:id="f2f960e8-b619-42f9-9c08-25ea741d90b5" variableName="methodType" />
+		<salesforce:query doc:name="Query" doc:id="04ab53c0-9aaf-4ce2-9c75-bb3b91c880b7" config-ref="Salesforce_Config">
+			<salesforce:salesforce-query><![CDATA[SELECT Id, Name__c, Account_Number__c, Industry__c, Type__c, Phone__c
+FROM New_Account__c]]></salesforce:salesforce-query>
+		</salesforce:query>
+		<flow-ref doc:name="checkEmpties flow" doc:id="400b8d92-278d-4e7a-9341-c7ce5ae3def3" name="checkEmpties" />
+	</sub-flow>
+	<sub-flow name="deleteAccountSubFlow" doc:id="6f0f9226-22bf-46aa-8382-a6c0555d9ee6" >
+		<ee:transform doc:name="Transform Message" doc:id="95e11b73-350e-40bd-8844-b59d45dad7ef">
+			<ee:message>
+			</ee:message>
+			<ee:variables>
+				<ee:set-variable variableName="idDelete"><![CDATA[%dw 2.0
+output application/java
+---
+[attributes.uriParams.accountId]]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<salesforce:delete doc:name="Delete" doc:id="f6999654-d603-4058-a4f7-c24359afa260" config-ref="Salesforce_Config">
+			<salesforce:ids><![CDATA[#[vars.idDelete]]]></salesforce:ids>
+		</salesforce:delete>
+		<ee:transform doc:name="delete response" doc:id="88f67511-fe43-411f-8b6d-026b09aee86f">
+					<ee:message>
+						<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+skipNullOn="everywhere"
+---
+{
+	id: vars.idDelete[0],
+	message: payload.items[0].message
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+	</sub-flow>
+	<sub-flow name="putAccountSubFlow" doc:id="4609493c-04cf-419b-b0fc-9c03385471b1" >
+		<ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core">
+            <ee:variables>
+				<ee:set-variable variableName="payloadUpdate"><![CDATA[%dw 2.0
+output application/java
+---
+[{
+	Id: attributes.uriParams.'accountId',
+	Industry__c: payload.Industry,
+	Type__c: payload.Type,
+	Phone__c: payload.Phone,
+	Name__c: payload.Name,
+	Account_Number__c: payload.AccountNumber
+}]]]></ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+		<salesforce:update doc:name="Update" doc:id="d85753b3-6031-42fb-9632-1a317c54b198" config-ref="Salesforce_Config" type="New_Account__c">
+			<salesforce:records><![CDATA[#[vars.payloadUpdate]]]></salesforce:records>
+		</salesforce:update>
+		<ee:transform doc:name="Transform Message" doc:id="313f71a4-87e8-4df3-99fd-a371451c9e7b">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+skipNullOn="everywhere"
+---
+{
+	id: vars.payloadUpdate.Id[0],
+	status: payload.items[0].successful,
+	message: payload.items[0].message
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</sub-flow>
+	<flow name="checkEmpties" doc:id="b9837073-97e0-4107-be45-dc32d3096a2c">
+		<choice doc:name="isEmpty?" doc:id="1fbf37a3-9ea6-46cd-955a-6f896db0019d">
+			<when expression="#[sizeOf(payload) == 0]">
+				<ee:transform doc:name="There is nothing there Message" doc:id="bf70fbe1-a5f3-4a58-a806-f5903bc2d2e5">
+					<ee:message>
+						<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+"Message": "There is nothing there"]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+			</when>
+			<otherwise>
+				<ee:transform doc:name="set original response" doc:id="d07558ac-1f51-4253-88e0-3fc97cdc5489">
+					<ee:message>
+					</ee:message>
+					<ee:variables>
+						<ee:set-variable variableName="originalResponse"><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-variable>
+					</ee:variables>
+				</ee:transform>
+				<ee:transform doc:name="Transform Message" doc:id="126d8c3b-4bc5-48cb-b423-2922d8fa74ca">
+					<ee:message>
+						<ee:set-payload><![CDATA[%dw 2.0
+output application/json 
+---
+vars.originalResponse]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+				<ee:transform doc:name="Transform Message" doc:id="a4e359c1-4f13-4df4-8bc1-365d58b271ec">
+					<ee:message>
+						<ee:set-payload><![CDATA[%dw 2.0
+output application/csv headerLineNumber = 0 , header = true
+---
+payload map ( payload01 , indexOfPayload01 ) -> {
+	Id: payload01.Id,
+	Industry: payload01.Industry__c,
+	Type: payload01.Type__c,
+	Phone: payload01.Phone__c,
+	Name: payload01.Name__c,
+	AccountNumber: payload01.Account_Number__c
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+				<file:write doc:name="Write" doc:id="c5afbea1-a010-43bd-991a-4ac407118715" path="#[p('app.home') ++ &quot;/files/&quot; ++ vars.methodType ++ &quot;_&quot; ++ now().nanoseconds ++ &quot;.csv&quot;]" mode="CREATE_NEW" />
+				<set-payload value="#[vars.originalResponse]" doc:name="Set Payload" doc:id="ec6ac7f0-277b-46ab-853e-bce65eb78685" />
+				<ee:transform doc:name="Transform Message" doc:id="ea7f69cc-0f6b-4384-b648-b19f29e077ae">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload map ( payload01 , indexOfPayload01 ) -> {
+	Id: payload01.Id,
+	Industry: payload01.Industry__c,
+	Type: payload01.Type__c,
+	Phone: payload01.Phone__c,
+	Name: payload01.Name__c,
+	AccountNumber: payload01.Account_Number__c
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+				<logger level="INFO" doc:name="Logger" doc:id="20e7a46b-8893-4f81-b233-068dc6720cfd" message="#[p('app.home') ++ &quot;/files/&quot; ++ vars.methodType ++ &quot;_&quot; ++ now().nanoseconds ++ &quot;.csv&quot;]" />
+			
+</otherwise>
+		</choice>
+	</flow>
+</mule>
