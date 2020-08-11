@@ -3,15 +3,15 @@
 api-sf-app that can be used to consume Account records from 2 different Salesforce instances using different endpoints. 
 It contains an API specification with the below methods:
 
-Get all accounts
+• Get all accounts
 
-Get single account
+• Get single account
 
-Post single account
+• Post single account
 
-Put single account
+• Put single account
 
-Delete single account
+• Delete single account
 
 
 Get methods generate CSV files but they only can be seen when the application runs on local or when there is another place like a server to drop the files.
@@ -19,18 +19,18 @@ Get methods generate CSV files but they only can be seen when the application ru
 {app.home}/files/{type_+time_in_nanoseconds_.csv}
 Example:
 
-Get all accounts: /opt/mule/mule-4.3.0/apps/exercise-sf-app/files/multiple_accounts_980000000.csv
+• Get all accounts: /opt/mule/mule-4.3.0/apps/exercise-sf-app/files/multiple_accounts_980000000.csv
 
-Get all accounts: /opt/mule/mule-4.3.0/apps/exercise-sf-app/files/single_account_648000000.csv
+• Get all accounts: /opt/mule/mule-4.3.0/apps/exercise-sf-app/files/single_account_648000000.csv
 
 To consume the endpoints, the developer needs to provide client_id and client_secret.
 client_id & client_secret can contain random names when the application is on local or when the application is deployed on cloudhub but the client Id enforcement policy is not enabled on API manager.
 
 If client Id enforcement policy is enabled on API manager, user needs to use below credentials
 
-client_id: c6b20f34a76e400c96bfdfefde3a3319
+• client_id: c6b20f34a76e400c96bfdfefde3a3319
 
-client_secret : D491f3F368A74592A15a29bEBa8500E5
+• client_secret : D491f3F368A74592A15a29bEBa8500E5
 
 The correct endpoints for each method will be provided in the Postman Collection (Attached to the email)
 
