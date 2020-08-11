@@ -2,12 +2,12 @@
 
 This application shows all the different kind of error handlings that exist in Mule 4:
 
-default error handling
+• default error handling
 
-on-continue
+• on-continue
 
-on-propagate
+• on-propagate
 
-try-catch
+• try-catch
 
-global exception strategy
+• global exception strategy
